@@ -4,6 +4,7 @@ import Hero from "@/Sections/Hero";
 import OmOss from "@/Sections/OmOss";
 import Customers from "@/Sections/Customers";
 import Tjenester from "@/Sections/Tjenester";
+import ScrollToTop from "@/Components/ScrollToTop";
 
 export default function Home() {
     const jsonLd = {
@@ -39,6 +40,7 @@ export default function Home() {
             <Customers />
             <Ansatte />
             <Footer />
+            <ScrollToTop />
         </>
     );
 }

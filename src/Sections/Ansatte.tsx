@@ -36,7 +36,7 @@ export default function Ansatte() {
     return (
         <>
             <section id="ansatte" className="py-16 bg-white">
-                <div className="container mx-auto px-6">
+                <div className="container max-w-[1200px] mx-auto px-6">
                     <div className="text-center mb-16">
                         <h2 className="text-4xl md:text-5xl text-[#172C51] mb-4">
                             Vårt team

@@ -82,13 +82,6 @@ export default function RootLayout({
 }) {
     return (
         <html lang="nb" className={dmSansSpecific.className}>
-            <head>
-                {/* <link rel="icon" href="/favicon.ico" sizes="any" /> */}
-                <link rel="icon" href="/icon.png" sizes="any" />
-                <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-                <link rel="manifest" href="/site.webmanifest" />
-                <meta name="theme-color" content="#172c51" />
-            </head>
             <body>
                 <NavBar />
                 {children}

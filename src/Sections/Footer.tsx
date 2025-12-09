@@ -33,7 +33,7 @@ export default function Footer() {
                             <li>
                                 <button
                                     onClick={() => scrollToSection("tjenester")}
-                                    className="hover:text-lys transition-colors duration-300"
+                                    className="hover:text-lys transition-colors  cursor-pointer duration-300"
                                 >
                                     Tjenester
                                 </button>
@@ -41,7 +41,7 @@ export default function Footer() {
                             <li>
                                 <button
                                     onClick={() => scrollToSection("om-oss")}
-                                    className="hover:text-lys transition-colors duration-300"
+                                    className="hover:text-lys transition-colors  cursor-pointer duration-300"
                                 >
                                     Om oss
                                 </button>
@@ -49,7 +49,7 @@ export default function Footer() {
                             <li>
                                 <button
                                     onClick={() => scrollToSection("ansatte")}
-                                    className="hover:text-lys transition-colors duration-300"
+                                    className="hover:text-lys transition-colors  cursor-pointer duration-300"
                                 >
                                     Ansatte
                                 </button>
@@ -63,7 +63,7 @@ export default function Footer() {
                             <li>
                                 <a
                                     href="mailto:hanne@valori.no"
-                                    className="hover:text-lys transition-colors duration-300"
+                                    className="hover:text-lys transition-colors  cursor-pointer duration-300"
                                 >
                                     Hanne Kolflaath
                                 </a>
@@ -71,7 +71,7 @@ export default function Footer() {
                             <li>
                                 <a
                                     href="mailto:johannes@valori.no"
-                                    className="hover:text-lys transition-colors duration-300"
+                                    className="hover:text-lys transition-colors  cursor-pointer duration-300"
                                 >
                                     Johannes Røsberg
                                 </a>
@@ -79,7 +79,7 @@ export default function Footer() {
                             <li>
                                 <a
                                     href="mailto:kathrine@valori.no"
-                                    className="hover:text-lys transition-colors duration-300"
+                                    className="hover:text-lys transition-colors  cursor-pointer duration-300"
                                 >
                                     Kathrine S. Elholt
                                 </a>

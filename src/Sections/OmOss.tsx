@@ -52,7 +52,7 @@ export default function OmOss() {
                         </h3>
                         <p className="text-slate-700 mb-6">
                             Valori ble til med vilje – og med
-                            <span className="text-natt">KRAFT</span>. Ideen
+                            <span className="text-natt"> KRAFT</span>. Ideen
                             oppstod i Skarvheimen, da trygghet ble valgt bort
                             til fordel for verdier, integritet og troen på å
                             skape noe meningsfullt.

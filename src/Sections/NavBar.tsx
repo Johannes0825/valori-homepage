@@ -14,17 +14,13 @@ export default function NavBar() {
         setIsOpen(false); // Lukk menyen på mobil
     };
 
-    const handleContact = () => {
-        window.location.href = "mailto:post@valori.no";
-    };
-
     return (
         <>
             <nav className="flex justify-between absolute top-0 left-0 right-0 z-50 items-center p-5">
                 <Image src={logo} alt="logo" width={150} />
 
                 {/* Desktop menu */}
-                <ul className="hidden md:flex gap-8 text-natt text-lg font-light">
+                <ul className="hidden lg:text-xl md:flex gap-8 text-natt text-lg font-light">
                     <li
                         onClick={() => scrollToSection("tjenester")}
                         className="cursor-pointer hover:text-strong transition-colors duration-300"
