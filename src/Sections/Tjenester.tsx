@@ -1,6 +1,6 @@
 import TjenesterBox from "@/Components/TjenesterBox";
 import {
-    Lightbulb,
+    FileCheck,
     Stethoscope,
     Rocket,
     BriefcaseBusiness,
@@ -10,22 +10,22 @@ const services = [
     {
         icon: Stethoscope,
         title: "E-helse & digitalisering",
-        desc: "Med brukerfokus og sektorforståelse hjelper vi deg med digital transformasjon og implementering av helsetjenester.",
+        desc: "Med over 25 års erfaring i norsk e-helse hjelper vi deg å lykkes med digitale satsinger – fra strategi og innsikt til implementering, anbud og gevinstrealisering.",
     },
     {
         icon: BriefcaseBusiness,
         title: "Ledelse & organisasjonsutvikling",
-        desc: "Verdibasert utvikling og endring som skaper bærekraftig vekst og styrker organisasjonskulturen.",
+        desc: "Verdibasert ledelse, endring og kulturbygging. Vi støtter dere med interimledelse, prosessledelse og lederstøtte som styrker både teamet og retningen.",
     },
     {
         icon: Rocket,
-        title: "Kommunalisering & markedsføring",
-        desc: "Fra idé til synlighet og vekst. Vi hjelper deg å finne de levere ditt budskap med kraft og klarhet.",
+        title: "Kommersialisering & markedsføring",
+        desc: "Fra idé til synlighet og vekst. Vi hjelper deg å forstå markedet, spisse budskapet, posisjonere deg tydelig og bygge en merkevare som beslutningstakere faktisk lytter til.",
     },
     {
-        icon: Lightbulb,
-        title: "Foredrag & inspirasjon",
-        desc: "Hvordan snu personlig krise til samfunnsnyttige løsninger. Engasjerende foredrag som inspirerer til handling.",
+        icon: FileCheck,
+        title: "Anbud & offentlige anskaffelser",
+        desc: "Vi hjelper deg å forstå spillet – og vinne det. Med dyp innsikt i regelverk, sektorlogikk og beslutningsprosesser bistår vi med anbudsstrategi, skrivebistand, kvalitetssikring og posisjonering.",
     },
 ];
 

@@ -35,7 +35,7 @@ const employees = [
 export default function Ansatte() {
     return (
         <>
-            <section id="ansatte" className="py-24 bg-white">
+            <section id="ansatte" className="py-16 bg-white">
                 <div className="container mx-auto px-6">
                     <div className="text-center mb-16">
                         <h2 className="text-4xl md:text-5xl text-[#172C51] mb-4">
@@ -47,7 +47,7 @@ export default function Ansatte() {
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {employees.map((employee, index) => (
                             <EmployeeCard key={index} {...employee} />
                         ))}

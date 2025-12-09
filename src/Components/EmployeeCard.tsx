@@ -21,7 +21,7 @@ export default function EmployeeCard({
     email,
 }: EmployeeProps) {
     return (
-        <div className="group">
+        <div className="group mb-12">
             <div className="relative mb-4 overflow-hidden rounded-lg">
                 <Image
                     src={image}
@@ -30,7 +30,7 @@ export default function EmployeeCard({
                     height={300}
                     className="w-full aspect-square object-cover group-hover:scale-105 transition-transform duration-300"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-natt/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6 gap-4">
+                <div className="absolute inset-0 bg-linear-to-t from-natt/80 to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6 gap-4">
                     {linkedin && (
                         <a
                             href={linkedin}
