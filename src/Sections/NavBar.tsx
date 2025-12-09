@@ -52,7 +52,7 @@ export default function NavBar() {
                 </ul>
 
                 <div className="hidden md:block">
-                    <Button text="Kontakt" onClick={handleContact} />
+                    <Button text="Kontakt" />
                 </div>
 
                 {/* Hamburger button (mobile) */}
@@ -113,10 +113,7 @@ export default function NavBar() {
                         Kunder
                     </li>
                     <li className="pt-2">
-                        <button
-                            onClick={handleContact}
-                            className="w-full bg-natt text-white px-6 py-4 rounded hover:bg-strong transition-colors duration-300"
-                        >
+                        <button className="w-full bg-natt text-white px-6 py-4 rounded hover:bg-strong transition-colors duration-300">
                             Kontakt oss
                         </button>
                     </li>

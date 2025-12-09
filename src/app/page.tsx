@@ -6,8 +6,33 @@ import Customers from "@/Sections/Customers";
 import Tjenester from "@/Sections/Tjenester";
 
 export default function Home() {
+    const jsonLd = {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        name: "Valori",
+        url: "https://valori.no",
+        logo: "https://valori.no/logo.png",
+        description:
+            "Verdidrevet rådgivning innen e-helse, digitalisering og offentlig sektor",
+        email: "post@valori.no",
+        address: {
+            "@type": "PostalAddress",
+            addressLocality: "Oslo",
+            addressCountry: "NO",
+        },
+        founder: {
+            "@type": "Person",
+            name: "Hanne Kolflaath",
+        },
+        sameAs: ["https://www.linkedin.com/company/valori"],
+    };
+
     return (
         <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
             <Hero />
             <Tjenester />
             <OmOss />

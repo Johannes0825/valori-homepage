@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import heroImage from "../../public/hero.jpg";
 import Button from "../Components/Button";
@@ -20,9 +22,6 @@ export default function Hero() {
                             </p>
                             <div className="flex  gap-4">
                                 <Button text="La oss finne verdien i det du gjør" />
-                                {/* <button className="border-2 border-natt text-natt px-8 py-4 rounded hover:bg-himmel transition">
-                                    Les mer
-                                </button> */}
                             </div>
                         </div>
                         <div className="relative">
