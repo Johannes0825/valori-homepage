@@ -52,7 +52,9 @@ Kjør hele `supabase/schema.sql` i Supabase → SQL Editor. Filen er idempotent 
 
 ### 4. Inviter brukere
 
-Authentication → Users → *Invite user* → e-post. Mottaker klikker lenken, velger passord på `/timer/sett-passord` og er inne. Invitasjonslenker utløper etter 24 t (kan sendes på nytt).
+Authentication → Users → *Invite user* → e-post. Mottaker klikker lenken, trykker «Aktiver konto» på `/timer/auth/confirm`, velger passord på `/timer/sett-passord` og er inne.
+
+Lenkene utløper etter «Email OTP Expiration» (Authentication → Sign In / Providers → Email) – standard er 1 time, sett gjerne 86400 (24 t). Utløpt lenke? Users → ⋯ → *Send invitation* på nytt (eller «Glemt passord» hvis kontoen allerede er aktivert).
 
 ### Struktur
 
