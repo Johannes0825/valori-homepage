@@ -1,5 +1,3 @@
-"use client";
-
 import { Linkedin, Mail } from "lucide-react";
 import Image from "next/image";
 
@@ -12,6 +10,9 @@ interface EmployeeProps {
     email?: string;
 }
 
+const iconLink =
+    "flex h-10 w-10 items-center justify-center rounded-full bg-white transition-[background-color,transform] duration-150 ease-smooth hover:bg-himmel active:scale-[0.98]";
+
 export default function EmployeeCard({
     name,
     role,
@@ -21,53 +22,46 @@ export default function EmployeeCard({
     email,
 }: EmployeeProps) {
     return (
-        <div className="group mb-12">
-            <div className="relative mb-4 overflow-hidden rounded-lg">
+        <div className="group">
+            <div className="relative overflow-hidden rounded-[20px]">
                 <Image
                     src={image}
-                    alt={`${name} profile picture`}
-                    width={300}
-                    height={300}
-                    className="w-full aspect-square object-cover group-hover:scale-105 transition-transform duration-300"
+                    alt={name}
+                    width={600}
+                    height={600}
+                    sizes="(max-width: 768px) 100vw, 340px"
+                    className="block aspect-square w-full object-cover transition-transform duration-300 ease-smooth group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-linear-to-t from-natt/80 to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6 gap-4">
+                <div className="absolute inset-0 flex items-end justify-center gap-4 bg-linear-to-t from-natt/80 to-transparent to-60% pb-6 opacity-100 transition-opacity duration-300 ease-smooth md:opacity-0 md:group-hover:opacity-100">
                     {linkedin && (
                         <a
                             href={linkedin}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="w-10 h-10 bg-white rounded-full flex items-center justify-center hover:bg-himmel transition-colors duration-300"
+                            aria-label={`${name} på LinkedIn`}
+                            className={iconLink}
                         >
-                            <Linkedin className="w-5 h-5 text-natt" />
+                            <Linkedin className="h-[18px] w-[18px] text-natt" />
                         </a>
                     )}
                     {email && (
                         <a
                             href={`mailto:${email}`}
-                            onClick={() => {
-                                navigator.clipboard.writeText(email);
-
-                                const mailto = `mailto:${email}`;
-
-                                const opened = window.open(mailto, "_self");
-
-                                if (!opened) {
-                                    // mailto ble blokkert → vis en liten toast
-                                    console.log(
-                                        "Kunne ikke åpne e-postklienten, e-postadresse kopiert."
-                                    );
-                                }
-                            }}
-                            className="w-10 h-10 bg-white rounded-full flex items-center justify-center hover:bg-himmel transition-colors duration-300"
+                            aria-label={`Send e-post til ${name}`}
+                            className={iconLink}
                         >
-                            <Mail className="w-5 h-5 text-natt" />
+                            <Mail className="h-[18px] w-[18px] text-natt" />
                         </a>
                     )}
                 </div>
             </div>
-            <h3 className="text-xl text-natt mb-1 font-semibold">{name}</h3>
-            <p className="text-strong mb-2">{role}</p>
-            <p className="text-slate-600 text-sm">{description}</p>
+            <h3 className="mt-[18px] mb-0.5 text-lg font-medium text-natt">
+                {name}
+            </h3>
+            <p className="mb-2 text-[14.5px] text-strong">{role}</p>
+            <p className="text-[14.5px] leading-[1.6] text-natt/60">
+                {description}
+            </p>
         </div>
     );
 }

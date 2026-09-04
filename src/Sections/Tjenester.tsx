@@ -1,4 +1,5 @@
 import TjenesterBox from "@/Components/TjenesterBox";
+import SectionHeading from "@/Components/SectionHeading";
 import {
     FileCheck,
     Stethoscope,
@@ -9,22 +10,22 @@ import {
 const services = [
     {
         icon: Stethoscope,
-        title: "E-helse & digitalisering",
+        title: "E-helse og digitalisering",
         desc: "Med over 25 års erfaring i norsk e-helse hjelper vi deg å lykkes med digitale satsinger – fra strategi og innsikt til implementering, anbud og gevinstrealisering.",
     },
     {
         icon: BriefcaseBusiness,
-        title: "Ledelse & organisasjonsutvikling",
+        title: "Ledelse og organisasjonsutvikling",
         desc: "Verdibasert ledelse, endring og kulturbygging. Vi støtter dere med interimledelse, prosessledelse og lederstøtte som styrker både teamet og retningen.",
     },
     {
         icon: Rocket,
-        title: "Kommersialisering & markedsføring",
+        title: "Kommersialisering og markedsføring",
         desc: "Fra idé til synlighet og vekst. Vi hjelper deg å forstå markedet, spisse budskapet, posisjonere deg tydelig og bygge en merkevare som beslutningstakere faktisk lytter til.",
     },
     {
         icon: FileCheck,
-        title: "Anbud & offentlige anskaffelser",
+        title: "Anbud og offentlige anskaffelser",
         desc: "Vi hjelper deg å forstå spillet – og vinne det. Med dyp innsikt i regelverk, sektorlogikk og beslutningsprosesser bistår vi med anbudsstrategi, skrivebistand, kvalitetssikring og posisjonering.",
     },
 ];
@@ -33,78 +34,21 @@ export default function Tjenester() {
     return (
         <section
             id="tjenester"
-            className="py-16 max-w-[1200px] mx-auto bg-white"
+            className="mx-3 rounded-[32px] bg-himmel px-5 py-16 md:mx-4 md:rounded-[48px] md:px-6 md:py-24"
         >
-            <div className="container mx-auto px-6">
-                <div className="text-center mb-16">
-                    <h2 className="text-4xl md:text-5xl text-natt mb-4">
-                        Kjerneområder
-                    </h2>
-                    <p className="text-xl text-slate-600 max-w-2xl mx-auto">
-                        Vi tilbyr skreddersydde løsninger innen våre fire
-                        kjerneområder
-                    </p>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    {services.map((item, i) => (
-                        <TjenesterBox key={i} {...item} />
+            <div className="mx-auto max-w-[1060px]">
+                <SectionHeading
+                    eyebrow="Tjenester"
+                    title="Fire kjerneområder"
+                    lead="Skreddersydd rådgivning – fra strategi og innsikt til gjennomføring."
+                    className="mb-10 md:mb-14"
+                />
+                <div className="grid gap-4 md:grid-cols-2 md:gap-5">
+                    {services.map((item) => (
+                        <TjenesterBox key={item.title} {...item} />
                     ))}
                 </div>
             </div>
         </section>
     );
 }
-
-/* 
-
-import { Lightbulb, Code, Rocket, Shield } from "lucide-react";
-import { Page } from "../App";
-
-interface ServicesProps {
-  onNavigate: (page: Page) => void;
-}
-
-const services = [
-  {
-    icon: Code,
-    title: "E-helse & digitalisering",
-    description: "Med brukerfokus og sektorforståelse hjelper vi deg med digital transformasjon og implementering av helsetjenester."
-  },
-  {
-    icon: Shield,
-    title: "Ledelse & organisasjonsutvikling",
-    description: "Verdibasert utvikling og endring som skaper bærekraftig vekst og styrker organisasjonskulturen."
-  },
-  {
-    icon: Rocket,
-    title: "Kommunalisering & markedsføring",
-    description: "Fra idé til synlighet og vekst. Vi hjelper deg å finne de levere ditt budskap med kraft og klarhet."
-  },
-  {
-    icon: Lightbulb,
-    title: "Foredrag & inspirasjon",
-    description: "Hvordan snu personlig krise til samfunnsnyttige løsninger. Engasjerende foredrag som inspirerer til handling."
-  }
-];
-
-<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-{services.map((service, index) => {
-    const Icon = service.icon;
-    return (
-      <div
-        key={index}
-        className="bg-white border border-slate-200 p-8 rounded-lg hover:border-[#2E4ACA] hover:shadow-lg transition group"
-      >
-        <div className="w-14 h-14 bg-[#172C51] rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-[#2E4ACA] transition">
-          <Icon className="w-7 h-7 text-white" />
-        </div>
-        <h3 className="text-xl text-[#172C51] mb-3">
-          {service.title}
-        </h3>
-        <p className="text-slate-600">
-          {service.description}
-        </p>
-      </div>
-    );
-  })}
-</div>*/

@@ -2,12 +2,43 @@
 
 @theme {
     --color-natt: #172c51;
-    --color-himmel: #e3edf1;
+    --color-himmel: #eaf1f8;
     --color-lun: #ffddbd;
     --color-strong: #2e4aca;
     --color-lys: #ffeddc;
+    --color-gull: #c98a46;
+
+    --font-sans: "General Sans", system-ui, -apple-system, "Segoe UI",
+        sans-serif;
+
+    --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 body {
-    font-family: inherit;
+    margin: 0;
+    background: #ffffff;
+    color: var(--color-natt);
+    font-family: var(--font-sans);
+    letter-spacing: -0.011em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Ankerseksjoner skal ikke gjemmes bak den faste headeren */
+section[id] {
+    scroll-margin-top: 96px;
+}
+
+/* Timer-verktøyet: skjul navigasjon/knapper ved utskrift */
+@media print {
+    .no-print {
+        display: none !important;
+    }
+    body {
+        background: #ffffff;
+    }
 }

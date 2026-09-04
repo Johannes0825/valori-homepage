@@ -12,13 +12,14 @@ export default function TjenesterBox({
     desc,
 }: ServicesProps) {
     return (
-        <div className="bg-white border col-span-1 border-slate-200 p-8 rounded-lg hover:border-strong hover:shadow-lg transition group">
-            <div className="w-14 h-14 bg-natt rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-[#2E4ACA] transition">
-                <Icon className="w-7 h-7 text-white" />
+        <div className="rounded-3xl bg-white p-7 md:p-8">
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-himmel">
+                <Icon className="h-6 w-6 text-natt" strokeWidth={2} />
             </div>
-
-            <h3 className="text-xl text-natt mb-3">{title}</h3>
-            <p className="text-slate-600">{desc}</p>
+            <h3 className="mt-5 mb-2.5 text-[19px] font-medium text-natt">
+                {title}
+            </h3>
+            <p className="text-[15.5px] leading-[1.6] text-natt/60">{desc}</p>
         </div>
     );
 }

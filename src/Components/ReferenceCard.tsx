@@ -12,14 +12,16 @@ export default function ReferenceCard({
     content,
 }: ReferenceCardProps) {
     return (
-        <article className="bg-white p-8 rounded-lg shadow-sm flex flex-col h-full hover:shadow-md transition-shadow duration-300">
-            <p className="text-slate-700 mb-6 italic">{content}</p>
+        <article className="flex h-full flex-col rounded-3xl bg-white p-[30px]">
+            <p className="mb-6 text-[15.5px] leading-[1.65] text-natt/70">
+                «{content}»
+            </p>
 
-            <div className="mt-auto border-t border-slate-200 pt-4">
-                <div className="text-natt font-semibold">{person}</div>
-                <div className="text-sm text-slate-600">
+            <div className="mt-auto border-t border-natt/8 pt-4">
+                <p className="text-[15px] font-medium text-natt">{person}</p>
+                <p className="mt-[3px] text-[13.5px] text-natt/55">
                     {role} · {company}
-                </div>
+                </p>
             </div>
         </article>
     );

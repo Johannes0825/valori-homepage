@@ -1,5 +1,6 @@
 import Image from "next/image";
 import ReferenceCard from "../Components/ReferenceCard";
+import SectionHeading from "../Components/SectionHeading";
 
 type Testimonial = {
     company: string;
@@ -20,6 +21,8 @@ const logos: Logo[] = [
     { name: "DNT", src: "/logos/dnt.png" },
     { name: "EHiN", src: "/logos/ehin.png" },
 ];
+
+const boardPositions = ["Aible", "Nasjonalforeningen Oslo Demensforening"];
 
 const testimonials: Testimonial[] = [
     {
@@ -47,57 +50,53 @@ const testimonials: Testimonial[] = [
 
 export default function Customers() {
     return (
-        <section id="kunder" className="py-16 bg-himmel">
-            <div className="container max-w-[1200px] mx-auto px-6">
-                {/* Tittel */}
-                <div className="text-center mb-16 max-w-3xl mx-auto">
-                    <h2 className="text-4xl md:text-5xl text-natt mb-4">
-                        Kunder og samarbeidspartnere
-                    </h2>
-                    <p className="text-lg md:text-xl text-slate-600">
-                        Valori hjelper helseteknologiselskaper, ideelle
-                        organisasjoner og frivillig sektor med å lykkes i det
-                        norske markedet.
-                    </p>
-                </div>
+        <section
+            id="kunder"
+            className="mx-3 rounded-[32px] bg-himmel px-5 py-16 md:mx-4 md:rounded-[48px] md:px-6 md:py-24"
+        >
+            <div className="mx-auto max-w-[1060px]">
+                <SectionHeading
+                    eyebrow="Kunder"
+                    title="Kunder og samarbeidspartnere"
+                    lead="Valori hjelper helseteknologiselskaper, ideelle organisasjoner og frivillig sektor med å lykkes i det norske markedet."
+                    leadMaxWidth="max-w-[560px]"
+                    className="mb-10 md:mb-[52px]"
+                />
 
                 {/* Logoer */}
-                <div className="mb-12">
-                    <h3 className="text-sm font-semibold tracking-wide text-slate-500 uppercase mb-4 text-center md:text-left">
-                        Et utvalg av kundene våre
-                    </h3>
-                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 items-center">
-                        {logos.map((logo) => (
-                            <div
-                                key={logo.name}
-                                className="bg-white border border-slate-200 rounded-lg px-4 py-6 h-32 flex items-center justify-center hover:border-strong transition-colors duration-300"
-                            >
-                                <Image
-                                    src={logo.src}
-                                    alt={`${logo.name} logo`}
-                                    width={140}
-                                    height={60}
-                                    className="object-contain max-h-full"
-                                />
-                            </div>
-                        ))}
-                    </div>
-                </div>
+                <ul className="mb-8 grid grid-cols-2 gap-3.5 sm:grid-cols-3 md:mb-11 lg:grid-cols-5">
+                    {logos.map((logo) => (
+                        <li
+                            key={logo.name}
+                            className="flex h-24 items-center justify-center rounded-2xl bg-white p-4"
+                        >
+                            <Image
+                                src={logo.src}
+                                alt={logo.name}
+                                width={120}
+                                height={44}
+                                className="h-auto max-h-11 w-auto max-w-[120px] object-contain opacity-85 transition-opacity duration-150 hover:opacity-100"
+                            />
+                        </li>
+                    ))}
+                </ul>
 
                 {/* Styrestillinger */}
-                <div className="mb-16 text-center md:text-left">
-                    <h3 className="text-sm font-semibold tracking-wide text-slate-500 uppercase mb-2">
+                <p className="mb-8 text-center text-sm text-natt/55 md:mb-11">
+                    <span className="font-medium text-gull">
                         Styrestillinger
-                    </h3>
-                    <p className="text-slate-700">
-                        Aible · Nasjonalforeningen Oslo Demensforening
-                    </p>
-                </div>
+                    </span>
+                    {boardPositions.map((b) => (
+                        <span key={b}>
+                            &nbsp;&nbsp;·&nbsp;&nbsp;{b}
+                        </span>
+                    ))}
+                </p>
 
-                {/* Referansekort */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {testimonials.map((testimonial, index) => (
-                        <ReferenceCard key={index} {...testimonial} />
+                {/* Referanser */}
+                <div className="grid gap-4 md:grid-cols-3 md:gap-5">
+                    {testimonials.map((t) => (
+                        <ReferenceCard key={t.person} {...t} />
                     ))}
                 </div>
             </div>

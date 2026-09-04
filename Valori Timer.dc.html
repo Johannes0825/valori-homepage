@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/dara-design-system-22e4db37-ecf9-443f-8803-c38e3a0f0de3/tokens/fonts.css">
+  <style>
+    body { margin: 0; background: #F6F8FB; font-family: 'General Sans', system-ui, sans-serif; color: #172C51; letter-spacing: -0.011em; -webkit-font-smoothing: antialiased; }
+    a { color: #2E4ACA; text-decoration: none; }
+    a:hover { color: #172C51; }
+    input, select, button { font-family: 'General Sans', system-ui, sans-serif; letter-spacing: -0.011em; color: #172C51; }
+    input:focus, select:focus { outline: 2px solid rgba(46,74,202,0.35); outline-offset: 0; }
+    @media print { .no-print { display: none !important; } body { background: #ffffff; } }
+  </style>
+</helmet>
+<div style="display: flex; height: 100vh; overflow: hidden; min-width: 1160px">
+  <aside class="no-print" style="width: 212px; flex-shrink: 0; background: #ffffff; border-right: 1px solid rgba(23,44,81,0.08); display: flex; flex-direction: column; padding: 20px 12px 16px 12px">
+    <img src="https://valori.no/_next/static/media/logo.60fa48da.png" alt="Valori" style="height: 22px; width: auto; align-self: flex-start; margin: 4px 0 6px 10px">
+    <p style="margin: 0 0 18px 10px; font-size: 11.5px; color: rgba(23,44,81,0.45)">Timeregistrering</p>
+    <nav style="display: flex; flex-direction: column; gap: 4px">
+      <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="3">
+        <button onClick="{{ item.velg }}" style="{{ item.stil }}" style-hover="background: rgba(23,44,81,0.05)" style-active="transform: scale(0.98)">{{ item.navn }}</button>
+      </sc-for>
+    </nav>
+    <div style="margin-top: auto; padding: 10px; border-top: 1px solid rgba(23,44,81,0.08)">
+      <p style="margin: 0; font-size: 12.5px; font-weight: 500">Valori AS</p>
+      <p style="margin: 2px 0 0 0; font-size: 11.5px; color: rgba(23,44,81,0.45)">Internverktøy · Drøbak</p>
+    </div>
+  </aside>
+
+  <main style="flex: 1; overflow-y: auto; padding: 30px 36px 48px 36px">
+    <div style="max-width: 1080px; margin: 0 auto">
+      <div style="display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 22px">
+        <div>
+          <h1 style="margin: 0; font-size: 26px; font-weight: 400; letter-spacing: -0.015em">{{ sideTittel }}</h1>
+          <p style="margin: 5px 0 0 0; font-size: 13.5px; color: rgba(23,44,81,0.55)">{{ sideUnder }}</p>
+        </div>
+        <div class="no-print" style="display: flex; gap: 8px">
+          <button onClick="{{ kopier }}" style="background: #ffffff; border: 1px solid rgba(23,44,81,0.12); border-radius: 999px; padding: 8px 16px; font-size: 13px; font-weight: 500; cursor: pointer" style-hover="background: rgba(23,44,81,0.04)" style-active="transform: scale(0.98)">Kopier</button>
+          <button onClick="{{ eksportCsv }}" style="background: #ffffff; border: 1px solid rgba(23,44,81,0.12); border-radius: 999px; padding: 8px 16px; font-size: 13px; font-weight: 500; cursor: pointer" style-hover="background: rgba(23,44,81,0.04)" style-active="transform: scale(0.98)">Eksporter CSV</button>
+          <button onClick="{{ skrivUt }}" style="background: #172C51; color: #ffffff; border: none; border-radius: 999px; padding: 8px 18px; font-size: 13px; font-weight: 500; cursor: pointer; transition: background 150ms cubic-bezier(0.4,0,0.2,1)" style-hover="background: #2E4ACA" style-active="transform: scale(0.98)">PDF-rapport</button>
+        </div>
+      </div>
+
+      <div class="no-print" style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 22px">
+        <select value="{{ filPerson }}" onChange="{{ setFilPerson }}" style="background: #ffffff; border: 1px solid rgba(23,44,81,0.12); border-radius: 999px; padding: 7px 12px; font-size: 13px; cursor: pointer">
+          <option value="alle">Alle personer</option>
+          <sc-for list="{{ personer }}" as="p" hint-placeholder-count="3"><option value="{{ p }}">{{ p }}</option></sc-for>
+        </select>
+        <select value="{{ filKunde }}" onChange="{{ setFilKunde }}" style="background: #ffffff; border: 1px solid rgba(23,44,81,0.12); border-radius: 999px; padding: 7px 12px; font-size: 13px; cursor: pointer">
+          <option value="alle">Alle kunder</option>
+          <sc-for list="{{ kunder }}" as="k" hint-placeholder-count="3"><option value="{{ k }}">{{ k }}</option></sc-for>
+        </select>
+        <select value="{{ filProsjekt }}" onChange="{{ setFilProsjekt }}" style="background: #ffffff; border: 1px solid rgba(23,44,81,0.12); border-radius: 999px; padding: 7px 12px; font-size: 13px; cursor: pointer">
+          <option value="alle">Alle prosjekter</option>
+          <sc-for list="{{ prosjektValgAlle }}" as="p" hint-placeholder-count="3"><option value="{{ p.id }}">{{ p.navn }}</option></sc-for>
+        </select>
+        <select value="{{ filMnd }}" onChange="{{ setFilMnd }}" style="background: #ffffff; border: 1px solid rgba(23,44,81,0.12); border-radius: 999px; padding: 7px 12px; font-size: 13px; cursor: pointer">
+          <option value="alle">Alle måneder</option>
+          <sc-for list="{{ maneder }}" as="m" hint-placeholder-count="2"><option value="{{ m.verdi }}">{{ m.navn }}</option></sc-for>
+        </select>
+        <div style="display: flex; gap: 2px; background: #ffffff; border: 1px solid rgba(23,44,81,0.12); border-radius: 999px; padding: 3px">
+          <sc-for list="{{ faktValg }}" as="f" hint-placeholder-count="3">
+            <button onClick="{{ f.velg }}" style="{{ f.stil }}" style-active="transform: scale(0.98)">{{ f.navn }}</button>
+          </sc-for>
+        </div>
+      </div>
+
+      <sc-if value="{{ erOversikt }}" hint-placeholder-val="{{ true }}">
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 22px">
+          <div style="background: #ffffff; border-radius: 16px; padding: 20px 22px">
+            <p style="margin: 0; font-size: 12.5px; color: rgba(23,44,81,0.5)">Timer ført</p>
+            <p style="margin: 8px 0 0 0; font-size: 30px; font-weight: 400; letter-spacing: -0.015em">{{ kpiTimer }}</p>
+          </div>
+          <div style="background: #ffffff; border-radius: 16px; padding: 20px 22px">
+            <p style="margin: 0; font-size: 12.5px; color: rgba(23,44,81,0.5)">Fakturerbart</p>
+            <p style="margin: 8px 0 0 0; font-size: 30px; font-weight: 400; letter-spacing: -0.015em">{{ kpiFakt }} <span style="font-size: 14px; color: rgba(23,44,81,0.45)">{{ kpiFaktPct }}</span></p>
+          </div>
+          <div style="background: #ffffff; border-radius: 16px; padding: 20px 22px">
+            <p style="margin: 0; font-size: 12.5px; color: rgba(23,44,81,0.5)">Reisetid</p>
+            <p style="margin: 8px 0 0 0; font-size: 30px; font-weight: 400; letter-spacing: -0.015em">{{ kpiReise }}</p>
+          </div>
+          <div style="background: #ffffff; border-radius: 16px; padding: 20px 22px">
+            <p style="margin: 0; font-size: 12.5px; color: rgba(23,44,81,0.5)">Aktive prosjekter</p>
+            <p style="margin: 8px 0 0 0; font-size: 30px; font-weight: 400; letter-spacing: -0.015em">{{ kpiProsjekter }}</p>
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 14px">
+          <div style="background: #ffffff; border-radius: 16px; padding: 22px 24px">
+            <p style="margin: 0 0 16px 0; font-size: 14px; font-weight: 500">Timer per prosjekt</p>
+            <div style="display: flex; flex-direction: column; gap: 14px">
+              <sc-for list="{{ prosjektTimer }}" as="p" hint-placeholder-count="4">
+                <div>
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 5px">
+                    <span style="font-size: 13px"><span style="{{ p.fargeStil }}"></span>{{ p.navn }} <span style="color: rgba(23,44,81,0.45)">· {{ p.kunde }}</span></span>
+                    <span style="font-size: 13px; font-weight: 500">{{ p.timerVis }} t</span>
+                  </div>
+                  <div style="height: 6px; background: #EAF1F8; border-radius: 999px; overflow: hidden"><div style="{{ p.barStil }}"></div></div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <div style="background: #ffffff; border-radius: 16px; padding: 22px 24px">
+            <p style="margin: 0 0 10px 0; font-size: 14px; font-weight: 500">Siste føringer</p>
+            <div style="display: flex; flex-direction: column">
+              <sc-for list="{{ sisteRader }}" as="r" hint-placeholder-count="5">
+                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 9px 0; border-top: 1px solid rgba(23,44,81,0.06)">
+                  <span style="font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap">{{ r.beskrivelse }}</span>
+                  <span style="font-size: 12.5px; color: rgba(23,44,81,0.5); white-space: nowrap">{{ r.datoVis }} · {{ r.person }} · {{ r.timerVis }} t</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ erTimer }}" hint-placeholder-val="{{ false }}">
+        <div class="no-print" style="background: #ffffff; border-radius: 16px; padding: 18px 20px; margin-bottom: 18px">
+          <p style="margin: 0 0 12px 0; font-size: 14px; font-weight: 500">Ny føring</p>
+          <div style="display: grid; grid-template-columns: 130px 1fr 130px 90px 90px 2fr; gap: 8px; align-items: center">
+            <input type="date" value="{{ fDato }}" onChange="{{ sFDato }}" style="background: #F0F4F9; border: none; border-radius: 10px; padding: 9px 12px; font-size: 13px">
+            <select value="{{ fProsjekt }}" onChange="{{ sFProsjekt }}" style="background: #F0F4F9; border: none; border-radius: 10px; padding: 9px 12px; font-size: 13px; cursor: pointer">
+              <option value="">Velg prosjekt …</option>
+              <sc-for list="{{ prosjektValg }}" as="p" hint-placeholder-count="4"><option value="{{ p.id }}">{{ p.navn }} · {{ p.kunde }}</option></sc-for>
+            </select>
+            <select value="{{ fPerson }}" onChange="{{ sFPerson }}" style="background: #F0F4F9; border: none; border-radius: 10px; padding: 9px 12px; font-size: 13px; cursor: pointer">
+              <sc-for list="{{ personer }}" as="p" hint-placeholder-count="3"><option value="{{ p }}">{{ p }}</option></sc-for>
+            </select>
+            <input type="number" step="0.25" min="0" placeholder="Timer" value="{{ fTimer }}" onChange="{{ sFTimer }}" style="background: #F0F4F9; border: none; border-radius: 10px; padding: 9px 12px; font-size: 13px">
+            <input type="number" step="0.25" min="0" placeholder="Reise" value="{{ fReise }}" onChange="{{ sFReise }}" style="background: #F0F4F9; border: none; border-radius: 10px; padding: 9px 12px; font-size: 13px">
+            <input type="text" placeholder="Hva jobbet du med?" value="{{ fBeskrivelse }}" onChange="{{ sFBeskrivelse }}" style="background: #F0F4F9; border: none; border-radius: 10px; padding: 9px 12px; font-size: 13px">
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px; margin-top: 10px">
+            <button onClick="{{ byttFFakt }}" style="{{ fFaktStil }}" style-active="transform: scale(0.98)">{{ fFaktTekst }}</button>
+            <button onClick="{{ leggTil }}" style="margin-left: auto; background: #172C51; color: #ffffff; border: none; border-radius: 999px; padding: 9px 22px; font-size: 13px; font-weight: 500; cursor: pointer; transition: background 150ms cubic-bezier(0.4,0,0.2,1)" style-hover="background: #2E4ACA" style-active="transform: scale(0.98)">Lagre føring</button>
+          </div>
+        </div>
+        <div style="background: #ffffff; border-radius: 16px; overflow: hidden">
+          <div style="display: grid; grid-template-columns: 84px 96px 100px 1.3fr 2fr 64px 64px 96px 36px; gap: 10px; padding: 12px 20px; font-size: 12px; font-weight: 500; color: rgba(23,44,81,0.5)">
+            <span>Dato</span><span>Person</span><span>Kunde</span><span>Prosjekt</span><span>Beskrivelse</span><span style="text-align: right">Timer</span><span style="text-align: right">Reise</span><span>Fakturerbar</span><span></span>
+          </div>
+          <sc-for list="{{ rader }}" as="r" hint-placeholder-count="8">
+            <div style="display: grid; grid-template-columns: 84px 96px 100px 1.3fr 2fr 64px 64px 96px 36px; gap: 10px; padding: 11px 20px; align-items: center; border-top: 1px solid rgba(23,44,81,0.06); font-size: 13px" style-hover="background: rgba(23,44,81,0.02)">
+              <span style="color: rgba(23,44,81,0.65)">{{ r.datoVis }}</span>
+              <span>{{ r.person }}</span>
+              <span style="color: rgba(23,44,81,0.65)">{{ r.kunde }}</span>
+              <span><span style="{{ r.fargeStil }}"></span>{{ r.prosjektNavn }}</span>
+              <span style="color: rgba(23,44,81,0.65); overflow: hidden; text-overflow: ellipsis; white-space: nowrap">{{ r.beskrivelse }}</span>
+              <span style="text-align: right; font-weight: 500">{{ r.timerVis }}</span>
+              <span style="text-align: right; color: rgba(23,44,81,0.55)">{{ r.reiseVis }}</span>
+              <span><span style="{{ r.faktStil }}">{{ r.faktTekst }}</span></span>
+              <button class="no-print" onClick="{{ r.slett }}" aria-label="Slett" style="background: none; border: none; cursor: pointer; color: rgba(23,44,81,0.35); font-size: 15px; border-radius: 999px; width: 26px; height: 26px" style-hover="background: rgba(23,44,81,0.06); color: #172C51">×</button>
+            </div>
+          </sc-for>
+          <div style="display: grid; grid-template-columns: 84px 96px 100px 1.3fr 2fr 64px 64px 96px 36px; gap: 10px; padding: 12px 20px; border-top: 1px solid rgba(23,44,81,0.1); font-size: 13px; font-weight: 500">
+            <span style="grid-column: 1 / 6">Sum ({{ antallRader }} føringer)</span>
+            <span style="text-align: right">{{ sumTimer }}</span>
+            <span style="text-align: right">{{ sumReise }}</span>
+            <span></span><span></span>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ erProsjekter }}" hint-placeholder-val="{{ false }}">
+        <div class="no-print" style="background: #ffffff; border-radius: 16px; padding: 18px 20px; margin-bottom: 18px">
+          <p style="margin: 0 0 12px 0; font-size: 14px; font-weight: 500">Nytt prosjekt</p>
+          <div style="display: grid; grid-template-columns: 1.4fr 1fr 110px 110px 130px auto; gap: 8px; align-items: center">
+            <input type="text" placeholder="Prosjektnavn" value="{{ pNavn }}" onChange="{{ sPNavn }}" style="background: #F0F4F9; border: none; border-radius: 10px; padding: 9px 12px; font-size: 13px">
+            <input type="text" placeholder="Kunde" value="{{ pKunde }}" onChange="{{ sPKunde }}" style="background: #F0F4F9; border: none; border-radius: 10px; padding: 9px 12px; font-size: 13px">
+            <input type="number" min="0" placeholder="Timepris" value="{{ pTimepris }}" onChange="{{ sPTimepris }}" style="background: #F0F4F9; border: none; border-radius: 10px; padding: 9px 12px; font-size: 13px">
+            <input type="number" min="0" placeholder="Timeramme" value="{{ pRamme }}" onChange="{{ sPRamme }}" style="background: #F0F4F9; border: none; border-radius: 10px; padding: 9px 12px; font-size: 13px">
+            <select value="{{ pFarge }}" onChange="{{ sPFarge }}" style="background: #F0F4F9; border: none; border-radius: 10px; padding: 9px 12px; font-size: 13px; cursor: pointer">
+              <sc-for list="{{ fargeValg }}" as="f" hint-placeholder-count="5"><option value="{{ f.verdi }}">{{ f.navn }}</option></sc-for>
+            </select>
+            <button onClick="{{ leggTilProsjekt }}" style="background: #172C51; color: #ffffff; border: none; border-radius: 999px; padding: 9px 20px; font-size: 13px; font-weight: 500; cursor: pointer; transition: background 150ms cubic-bezier(0.4,0,0.2,1)" style-hover="background: #2E4ACA" style-active="transform: scale(0.98)">Opprett</button>
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px">
+          <sc-for list="{{ prosjektKort }}" as="p" hint-placeholder-count="4">
+            <div style="background: #ffffff; border-radius: 16px; padding: 20px 22px">
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px">
+                <span style="{{ p.fargeStil }}"></span>
+                <p style="margin: 0; font-size: 15px; font-weight: 500">{{ p.navn }}</p>
+                <span style="{{ p.statusStil }}">{{ p.statusTekst }}</span>
+              </div>
+              <p style="margin: 0 0 14px 0; font-size: 13px; color: rgba(23,44,81,0.55)">{{ p.kunde }} · {{ p.timeprisVis }} kr/t</p>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 12.5px; color: rgba(23,44,81,0.55)">
+                <span>{{ p.bruktVis }} av {{ p.rammeVis }} t</span><span>{{ p.pctVis }}</span>
+              </div>
+              <div style="height: 6px; background: #EAF1F8; border-radius: 999px; overflow: hidden; margin-bottom: 14px"><div style="{{ p.barStil }}"></div></div>
+              <button class="no-print" onClick="{{ p.byttStatus }}" style="background: none; border: 1px solid rgba(23,44,81,0.12); border-radius: 999px; padding: 6px 14px; font-size: 12.5px; font-weight: 500; cursor: pointer" style-hover="background: rgba(23,44,81,0.04)" style-active="transform: scale(0.98)">{{ p.byttTekst }}</button>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+    </div>
+  </main>
+
+  <sc-if value="{{ visToast }}" hint-placeholder-val="{{ false }}">
+    <div style="position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: #172C51; color: #ffffff; border-radius: 999px; padding: 10px 22px; font-size: 13.5px; box-shadow: 0 12px 30px rgba(23,44,81,0.25); z-index: 100">{{ toastTekst }}</div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;standardFakturerbar&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Innstillinger&quot;}}">
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    const seedProjects = [
+      { id: 'p1', navn: 'Markedsstrategi', kunde: 'Youwell', timepris: 1450, ramme: 120, aktiv: true, farge: '#2E4ACA' },
+      { id: 'p2', navn: 'Anbud Helseplattform', kunde: 'KMD', timepris: 1550, ramme: 200, aktiv: true, farge: '#C98A46' },
+      { id: 'p3', navn: 'Norsk etablering', kunde: 'DigiRehab', timepris: 1450, ramme: 80, aktiv: true, farge: '#3E8E7E' },
+      { id: 'p4', navn: 'Frivilligprogram', kunde: 'DNT', timepris: 1200, ramme: 60, aktiv: true, farge: '#5A7BD8' },
+      { id: 'p5', navn: 'EHiN 2026', kunde: 'EHiN', timepris: 1350, ramme: 40, aktiv: false, farge: '#7A5AC9' },
+    ];
+    const seedEntries = [
+      { id: 'e1', dato: '2026-09-04', person: 'Hanne', prosjektId: 'p2', timer: 6, reise: 1.5, beskrivelse: 'Anbudsstrategi og skriveøkt', fakt: true },
+      { id: 'e12', dato: '2026-09-04', person: 'Johannes', prosjektId: 'p3', timer: 4, reise: 0, beskrivelse: 'Statusrapport august', fakt: true },
+      { id: 'e2', dato: '2026-09-03', person: 'Hanne', prosjektId: 'p1', timer: 4, reise: 0, beskrivelse: 'Markedsplan Q4', fakt: true },
+      { id: 'e3', dato: '2026-09-03', person: 'Johannes', prosjektId: 'p2', timer: 7, reise: 0, beskrivelse: 'Kravanalyse og vedlegg', fakt: true },
+      { id: 'e4', dato: '2026-09-02', person: 'Kathrine', prosjektId: 'p3', timer: 5, reise: 2, beskrivelse: 'Arbeidsflytkartlegging hos kunde', fakt: true },
+      { id: 'e5', dato: '2026-09-02', person: 'Hanne', prosjektId: 'p5', timer: 2, reise: 0, beskrivelse: 'Programkomité EHiN', fakt: false },
+      { id: 'e6', dato: '2026-09-01', person: 'Johannes', prosjektId: 'p1', timer: 3, reise: 0, beskrivelse: 'Konkurrentanalyse', fakt: true },
+      { id: 'e7', dato: '2026-08-28', person: 'Kathrine', prosjektId: 'p3', timer: 6, reise: 1, beskrivelse: 'Brukertesting pilot', fakt: true },
+      { id: 'e8', dato: '2026-08-27', person: 'Hanne', prosjektId: 'p4', timer: 3, reise: 0.5, beskrivelse: 'Frivilligsamling forberedelse', fakt: false },
+      { id: 'e9', dato: '2026-08-26', person: 'Johannes', prosjektId: 'p2', timer: 8, reise: 0, beskrivelse: 'Tilbudsutkast v1', fakt: true },
+      { id: 'e10', dato: '2026-08-25', person: 'Hanne', prosjektId: 'p2', timer: 5, reise: 1.5, beskrivelse: 'Møte med KMD, Oslo', fakt: true },
+      { id: 'e11', dato: '2026-08-24', person: 'Kathrine', prosjektId: 'p1', timer: 2, reise: 0, beskrivelse: 'Innspill budskap helsepersonell', fakt: true },
+    ];
+    this.state = {
+      view: 'oversikt',
+      entries: seedEntries,
+      projects: seedProjects,
+      filters: { person: 'alle', kunde: 'alle', prosjekt: 'alle', mnd: '2026-09', fakt: 'alle' },
+      form: { dato: '2026-09-04', prosjektId: '', person: 'Hanne', timer: '', reise: '', beskrivelse: '', fakt: this.props.standardFakturerbar ?? true },
+      pform: { navn: '', kunde: '', timepris: '', ramme: '', farge: '#2E4ACA' },
+      toast: null,
+    };
+  }
+  componentDidMount() {
+    try {
+      const raw = localStorage.getItem('valori-timer-v1');
+      if (raw) {
+        const d = JSON.parse(raw);
+        if (d.entries && d.projects) this.setState({ entries: d.entries, projects: d.projects });
+      }
+    } catch (e) {}
+  }
+  lagre() {
+    try { localStorage.setItem('valori-timer-v1', JSON.stringify({ entries: this.state.entries, projects: this.state.projects })); } catch (e) {}
+  }
+  visToastMelding(msg) {
+    clearTimeout(this._tt);
+    this.setState({ toast: msg });
+    this._tt = setTimeout(() => this.setState({ toast: null }), 2400);
+  }
+  tall(n) { return (Math.round(n * 100) / 100).toLocaleString('nb-NO'); }
+  datoVis(iso) {
+    const mnd = ['jan', 'feb', 'mar', 'apr', 'mai', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'des'];
+    const [y, m, d] = iso.split('-');
+    return parseInt(d) + '. ' + mnd[parseInt(m) - 1] + '.';
+  }
+  mndNavn(ym) {
+    const mnd = ['januar', 'februar', 'mars', 'april', 'mai', 'juni', 'juli', 'august', 'september', 'oktober', 'november', 'desember'];
+    const [y, m] = ym.split('-');
+    return mnd[parseInt(m) - 1] + ' ' + y;
+  }
+  filtrert() {
+    const f = this.state.filters;
+    return this.state.entries.filter(e =>
+      (f.person === 'alle' || e.person === f.person) &&
+      (f.prosjekt === 'alle' || e.prosjektId === f.prosjekt) &&
+      (f.mnd === 'alle' || e.dato.startsWith(f.mnd)) &&
+      (f.fakt === 'alle' || (f.fakt === 'ja') === e.fakt) &&
+      (f.kunde === 'alle' || (this.prosjekt(e.prosjektId) || {}).kunde === f.kunde)
+    ).sort((a, b) => b.dato.localeCompare(a.dato));
+  }
+  prosjekt(id) { return this.state.projects.find(p => p.id === id); }
+  eksportRader() {
+    return this.filtrert().map(e => {
+      const p = this.prosjekt(e.prosjektId) || {};
+      return [e.dato, e.person, p.kunde || '', p.navn || '', e.beskrivelse, String(e.timer).replace('.', ','), String(e.reise).replace('.', ','), e.fakt ? 'Ja' : 'Nei'];
+    });
+  }
+  renderVals() {
+    const s = this.state;
+    const setFilter = (k) => (e) => this.setState({ filters: { ...s.filters, [k]: e.target.value } });
+    const setForm = (k) => (e) => this.setState({ form: { ...this.state.form, [k]: e.target.value } });
+    const setPform = (k) => (e) => this.setState({ pform: { ...this.state.pform, [k]: e.target.value } });
+    const rader = this.filtrert();
+    const dot = (farge) => 'display:inline-block;width:8px;height:8px;border-radius:999px;background:' + farge + ';margin-right:7px;flex-shrink:0';
+    const navStil = (aktiv) => 'text-align:left;background:' + (aktiv ? '#EAF1F8' : 'none') + ';border:none;border-radius:999px;padding:9px 14px;font-size:13.5px;font-weight:' + (aktiv ? '500' : '400') + ';color:#172C51;cursor:pointer';
+    const pillStil = (aktiv) => 'border:none;border-radius:999px;padding:5px 12px;font-size:12.5px;font-weight:500;cursor:pointer;background:' + (aktiv ? '#172C51' : 'none') + ';color:' + (aktiv ? '#ffffff' : 'rgba(23,44,81,0.6)');
+    const badge = (fakt) => 'display:inline-block;border-radius:999px;padding:2px 10px;font-size:11.5px;font-weight:500;background:' + (fakt ? 'rgba(46,74,202,0.1)' : 'rgba(23,44,81,0.07)') + ';color:' + (fakt ? '#2E4ACA' : 'rgba(23,44,81,0.6)');
+    const sumTimer = rader.reduce((a, e) => a + e.timer, 0);
+    const sumReise = rader.reduce((a, e) => a + e.reise, 0);
+    const faktTimer = rader.filter(e => e.fakt).reduce((a, e) => a + e.timer, 0);
+    const mndSet = [...new Set(s.entries.map(e => e.dato.slice(0, 7)))].sort().reverse();
+    const perProsjekt = s.projects.map(p => {
+      const t = rader.filter(e => e.prosjektId === p.id).reduce((a, e) => a + e.timer, 0);
+      return { p, t };
+    }).filter(x => x.t > 0).sort((a, b) => b.t - a.t);
+    const maksT = Math.max(1, ...perProsjekt.map(x => x.t));
+    const titler = { oversikt: ['Oversikt', 'Nøkkeltall for valgt periode og filter'], timer: ['Timeføring', 'Registrer og administrer føringer'], prosjekter: ['Prosjekter', 'Opprett og følg opp prosjekter'] };
+    return {
+      navItems: ['oversikt', 'timer', 'prosjekter'].map(v => ({
+        navn: { oversikt: 'Oversikt', timer: 'Timeføring', prosjekter: 'Prosjekter' }[v],
+        stil: navStil(s.view === v),
+        velg: () => this.setState({ view: v }),
+      })),
+      erOversikt: s.view === 'oversikt', erTimer: s.view === 'timer', erProsjekter: s.view === 'prosjekter',
+      sideTittel: titler[s.view][0], sideUnder: titler[s.view][1],
+      personer: ['Hanne', 'Johannes', 'Kathrine'],
+      kunder: [...new Set(s.projects.map(p => p.kunde))],
+      prosjektValgAlle: s.projects,
+      prosjektValg: s.projects.filter(p => p.aktiv),
+      maneder: mndSet.map(m => ({ verdi: m, navn: this.mndNavn(m) })),
+      filPerson: s.filters.person, setFilPerson: setFilter('person'),
+      filKunde: s.filters.kunde, setFilKunde: setFilter('kunde'),
+      filProsjekt: s.filters.prosjekt, setFilProsjekt: setFilter('prosjekt'),
+      filMnd: s.filters.mnd, setFilMnd: setFilter('mnd'),
+      faktValg: [['alle', 'Alle'], ['ja', 'Fakturerbar'], ['nei', 'Ikke fakturerbar']].map(([v, n]) => ({
+        navn: n, stil: pillStil(s.filters.fakt === v), velg: () => this.setState({ filters: { ...this.state.filters, fakt: v } }),
+      })),
+      kpiTimer: this.tall(sumTimer) + ' t',
+      kpiFakt: this.tall(faktTimer) + ' t',
+      kpiFaktPct: sumTimer ? Math.round(faktTimer / sumTimer * 100) + ' %' : '–',
+      kpiReise: this.tall(sumReise) + ' t',
+      kpiProsjekter: s.projects.filter(p => p.aktiv).length,
+      prosjektTimer: perProsjekt.map(({ p, t }) => ({
+        navn: p.navn, kunde: p.kunde, timerVis: this.tall(t), fargeStil: dot(p.farge),
+        barStil: 'height:100%;border-radius:999px;background:' + p.farge + ';width:' + Math.round(t / maksT * 100) + '%',
+      })),
+      sisteRader: rader.slice(0, 6).map(e => ({ beskrivelse: e.beskrivelse, person: e.person, datoVis: this.datoVis(e.dato), timerVis: this.tall(e.timer) })),
+      fDato: s.form.dato, sFDato: setForm('dato'),
+      fProsjekt: s.form.prosjektId, sFProsjekt: setForm('prosjektId'),
+      fPerson: s.form.person, sFPerson: setForm('person'),
+      fTimer: s.form.timer, sFTimer: setForm('timer'),
+      fReise: s.form.reise, sFReise: setForm('reise'),
+      fBeskrivelse: s.form.beskrivelse, sFBeskrivelse: setForm('beskrivelse'),
+      fFaktTekst: s.form.fakt ? 'Fakturerbar: ja' : 'Fakturerbar: nei',
+      fFaktStil: 'border:1px solid ' + (s.form.fakt ? 'rgba(46,74,202,0.4)' : 'rgba(23,44,81,0.15)') + ';background:' + (s.form.fakt ? 'rgba(46,74,202,0.08)' : 'none') + ';color:' + (s.form.fakt ? '#2E4ACA' : 'rgba(23,44,81,0.6)') + ';border-radius:999px;padding:6px 14px;font-size:12.5px;font-weight:500;cursor:pointer',
+      byttFFakt: () => this.setState({ form: { ...this.state.form, fakt: !this.state.form.fakt } }),
+      leggTil: () => {
+        const f = this.state.form;
+        if (!f.prosjektId || !f.dato || !parseFloat(f.timer)) { this.visToastMelding('Fyll ut dato, prosjekt og timer'); return; }
+        const ny = { id: 'e' + Date.now(), dato: f.dato, person: f.person, prosjektId: f.prosjektId, timer: parseFloat(f.timer), reise: parseFloat(f.reise) || 0, beskrivelse: f.beskrivelse || '–', fakt: f.fakt };
+        this.setState({ entries: [ny, ...this.state.entries], form: { ...f, timer: '', reise: '', beskrivelse: '' } }, () => this.lagre());
+        this.visToastMelding('Føring lagret');
+      },
+      rader: rader.map(e => {
+        const p = this.prosjekt(e.prosjektId) || {};
+        return {
+          datoVis: this.datoVis(e.dato), person: e.person, kunde: p.kunde || '–', prosjektNavn: p.navn || '–',
+          beskrivelse: e.beskrivelse, timerVis: this.tall(e.timer), reiseVis: e.reise ? this.tall(e.reise) : '–',
+          faktTekst: e.fakt ? 'Ja' : 'Nei', faktStil: badge(e.fakt), fargeStil: dot(p.farge || '#ccc'),
+          slett: () => { this.setState({ entries: this.state.entries.filter(x => x.id !== e.id) }, () => this.lagre()); this.visToastMelding('Føring slettet'); },
+        };
+      }),
+      antallRader: rader.length,
+      sumTimer: this.tall(sumTimer), sumReise: this.tall(sumReise),
+      pNavn: s.pform.navn, sPNavn: setPform('navn'),
+      pKunde: s.pform.kunde, sPKunde: setPform('kunde'),
+      pTimepris: s.pform.timepris, sPTimepris: setPform('timepris'),
+      pRamme: s.pform.ramme, sPRamme: setPform('ramme'),
+      pFarge: s.pform.farge, sPFarge: setPform('farge'),
+      fargeValg: [['#2E4ACA', 'Kongeblå'], ['#5A7BD8', 'Lys blå'], ['#C98A46', 'Rav'], ['#3E8E7E', 'Grønn'], ['#7A5AC9', 'Lilla']].map(([v, n]) => ({ verdi: v, navn: n })),
+      leggTilProsjekt: () => {
+        const f = this.state.pform;
+        if (!f.navn || !f.kunde) { this.visToastMelding('Fyll ut navn og kunde'); return; }
+        const ny = { id: 'p' + Date.now(), navn: f.navn, kunde: f.kunde, timepris: parseFloat(f.timepris) || 0, ramme: parseFloat(f.ramme) || 0, aktiv: true, farge: f.farge };
+        this.setState({ projects: [...this.state.projects, ny], pform: { navn: '', kunde: '', timepris: '', ramme: '', farge: '#2E4ACA' } }, () => this.lagre());
+        this.visToastMelding('Prosjekt opprettet');
+      },
+      prosjektKort: s.projects.map(p => {
+        const brukt = s.entries.filter(e => e.prosjektId === p.id).reduce((a, e) => a + e.timer, 0);
+        const pct = p.ramme ? Math.min(100, Math.round(brukt / p.ramme * 100)) : 0;
+        return {
+          navn: p.navn, kunde: p.kunde, timeprisVis: p.timepris.toLocaleString('nb-NO'),
+          bruktVis: this.tall(brukt), rammeVis: p.ramme ? this.tall(p.ramme) : '–', pctVis: p.ramme ? pct + ' %' : '',
+          fargeStil: dot(p.farge),
+          statusTekst: p.aktiv ? 'Aktiv' : 'Avsluttet',
+          statusStil: 'margin-left:auto;border-radius:999px;padding:2px 10px;font-size:11.5px;font-weight:500;background:' + (p.aktiv ? 'rgba(62,142,126,0.12)' : 'rgba(23,44,81,0.07)') + ';color:' + (p.aktiv ? '#2E7A6A' : 'rgba(23,44,81,0.55)'),
+          barStil: 'height:100%;border-radius:999px;background:' + (pct >= 100 ? '#C05B3E' : p.farge) + ';width:' + pct + '%',
+          byttTekst: p.aktiv ? 'Avslutt prosjekt' : 'Gjenåpne',
+          byttStatus: () => { this.setState({ projects: this.state.projects.map(x => x.id === p.id ? { ...x, aktiv: !x.aktiv } : x) }, () => this.lagre()); },
+        };
+      }),
+      kopier: () => {
+        const linjer = [['Dato', 'Person', 'Kunde', 'Prosjekt', 'Beskrivelse', 'Timer', 'Reisetid', 'Fakturerbar'], ...this.eksportRader()];
+        navigator.clipboard.writeText(linjer.map(r => r.join('\t')).join('\n')).then(() => this.visToastMelding('Kopiert til utklippstavlen'));
+      },
+      eksportCsv: () => {
+        const linjer = [['Dato', 'Person', 'Kunde', 'Prosjekt', 'Beskrivelse', 'Timer', 'Reisetid', 'Fakturerbar'], ...this.eksportRader()];
+        const csv = '\uFEFF' + linjer.map(r => r.map(c => '"' + String(c).replace(/"/g, '""') + '"').join(';')).join('\n');
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
+        a.download = 'valori-timer.csv';
+        a.click();
+        this.visToastMelding('CSV lastet ned');
+      },
+      skrivUt: () => { if (this.state.view === 'oversikt') window.print(); else { this.setState({ view: 'timer' }, () => setTimeout(() => window.print(), 100)); } },
+      visToast: !!s.toast, toastTekst: s.toast || '',
+    };
+  }
+}
+</script>
+</body>
+</html>

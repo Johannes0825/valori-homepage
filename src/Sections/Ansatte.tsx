@@ -1,4 +1,5 @@
 import EmployeeCard from "@/Components/EmployeeCard";
+import SectionHeading from "@/Components/SectionHeading";
 
 const employees = [
     {
@@ -34,26 +35,19 @@ const employees = [
 
 export default function Ansatte() {
     return (
-        <>
-            <section id="ansatte" className="py-16 bg-white">
-                <div className="container max-w-[1200px] mx-auto px-6">
-                    <div className="text-center mb-16">
-                        <h2 className="text-4xl md:text-5xl text-[#172C51] mb-4">
-                            Vårt team
-                        </h2>
-                        <p className="text-xl text-slate-600 max-w-2xl mx-auto">
-                            Møt de talentfulle menneskene som driver selskapet
-                            vårt fremover
-                        </p>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {employees.map((employee, index) => (
-                            <EmployeeCard key={index} {...employee} />
-                        ))}
-                    </div>
+        <section id="ansatte" className="px-6 pt-20 pb-12 md:pt-28 md:pb-20">
+            <div className="mx-auto max-w-[1060px]">
+                <SectionHeading
+                    eyebrow="Team"
+                    title="Menneskene bak Valori"
+                    className="mb-10 md:mb-[52px]"
+                />
+                <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3 md:gap-7">
+                    {employees.map((employee) => (
+                        <EmployeeCard key={employee.email} {...employee} />
+                    ))}
                 </div>
-            </section>
-        </>
+            </div>
+        </section>
     );
 }

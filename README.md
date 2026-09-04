@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# valori.no
 
-## Getting Started
-
-First, run the development server:
+Next.js 16 (App Router) + Tailwind v4. Offentlig nettside på `/`, internt timeregistreringsverktøy på `/timer`.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # http://localhost:3000
+npm run build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Timeregistrering (`/timer`)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Innlogging og database via Supabase. Brukere inviteres fra Supabase-dashboardet.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 1. Miljøvariabler
 
-## Learn More
+Kopier `.env.example` til `.env.local` og fyll inn fra Supabase → Project Settings → API:
 
-To learn more about Next.js, take a look at the following resources:
+```
+NEXT_PUBLIC_SUPABASE_URL=https://<prosjekt>.supabase.co
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_…
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Legg de samme to inn i Vercel → Project → Settings → Environment Variables.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 2. Database
 
-## Deploy on Vercel
+Kjør hele `supabase/schema.sql` i Supabase → SQL Editor. Filen er idempotent og oppretter:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `profiles` – én rad per bruker (opprettes automatisk ved invitasjon; navn = e-postens lokaldel, f.eks. `hanne@valori.no` → «Hanne»)
+- `projects` – prosjekter med kunde, timepris, timeramme, farge, aktiv/avsluttet
+- `time_entries` – timeføringer (dato, timer, reisetid, beskrivelse, fakturerbar)
+- RLS: alle innloggede ser alt; føringer kan bare opprettes/slettes av eieren
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 3. Auth-innstillinger i Supabase
+
+**Authentication → URL Configuration**
+
+- Site URL: `https://valori.no`
+- Redirect URLs: `https://valori.no/timer/**` og `http://localhost:3000/timer/**`
+
+**Authentication → Email Templates** – bytt lenken i to maler:
+
+- *Invite user*:
+  `{{ .SiteURL }}/timer/auth/confirm?token_hash={{ .TokenHash }}&type=invite`
+- *Reset password*:
+  `{{ .SiteURL }}/timer/auth/confirm?token_hash={{ .TokenHash }}&type=recovery`
+
+(Erstatter `{{ .ConfirmationURL }}`. Dette gjør at lenken virker uansett nettleser/enhet.)
+
+**Authentication → Sign In / Providers → Email**: la «Allow new users to sign up» være **av** – kun inviterte får tilgang.
+
+### 4. Inviter brukere
+
+Authentication → Users → *Invite user* → e-post. Mottaker klikker lenken, velger passord på `/timer/sett-passord` og er inne. Invitasjonslenker utløper etter 24 t (kan sendes på nytt).
+
+### Struktur
+
+```
+src/app/(site)/          offentlig nettside
+src/app/timer/           timer-verktøy (layout, sider, auth-ruter)
+src/Timer/               UI-komponenter for verktøyet
+src/lib/supabase/        browser-/server-klient, typer
+src/proxy.ts             fornyer sesjon og beskytter /timer
+supabase/schema.sql      databaseskjema + RLS
+```

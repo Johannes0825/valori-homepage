@@ -1,4 +1,5 @@
 import Ansatte from "@/Sections/Ansatte";
+import Cta from "@/Sections/Cta";
 import Footer from "@/Sections/Footer";
 import Hero from "@/Sections/Hero";
 import OmOss from "@/Sections/OmOss";
@@ -18,7 +19,7 @@ export default function Home() {
         email: "post@valori.no",
         address: {
             "@type": "PostalAddress",
-            addressLocality: "Oslo",
+            addressLocality: "Drøbak",
             addressCountry: "NO",
         },
         founder: {
@@ -39,6 +40,7 @@ export default function Home() {
             <OmOss />
             <Customers />
             <Ansatte />
+            <Cta />
             <Footer />
             <ScrollToTop />
         </>

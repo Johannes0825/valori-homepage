@@ -1,4 +1,5 @@
 import { KraftBox } from "@/Components/KraftBox";
+import SectionHeading from "@/Components/SectionHeading";
 
 const values = [
     {
@@ -29,85 +30,54 @@ const values = [
     },
 ];
 
-const firstRow = values.slice(0, 3);
-const secondRow = values.slice(3);
+const paragraph = "mb-[22px] text-[17px] leading-[1.7] text-natt/70";
 
 export default function OmOss() {
     return (
-        <section id="om-oss" className="py-2 sm:py-12 bg-white">
-            <div className="container mx-auto px-6">
-                <div className="max-w-4xl mx-auto">
-                    <div className="text-center mb-16">
-                        <h2 className="text-4xl md:text-5xl text-natt mb-4">
-                            Om oss
-                        </h2>
-                        <p className="text-2xl text-strong mb-8">
-                            Det krever vilje. Og det krever kraft.
-                        </p>
-                    </div>
+        <section id="om-oss" className="px-6 pt-20 pb-16 md:pt-28 md:pb-24">
+            <SectionHeading
+                eyebrow="Om oss"
+                title={
+                    <>
+                        Det krever vilje.
+                        <br />
+                        Og det krever kraft.
+                    </>
+                }
+                className="mx-auto max-w-[680px]"
+            />
 
-                    <div className="prose prose-lg max-w-none mb-16">
-                        <h3 className="text-2xl text-natt mb-4">
-                            Vår historie
-                        </h3>
-                        <p className="text-slate-700 mb-6">
-                            Valori ble til med vilje – og med
-                            <span className="text-natt"> KRAFT</span>. Ideen
-                            oppstod i Skarvheimen, da trygghet ble valgt bort
-                            til fordel for verdier, integritet og troen på å
-                            skape noe meningsfullt.
-                        </p>
-                        <p className="text-slate-700 mb-6">
-                            Vi bygger verdi i skjæringspunktet mellom helse,
-                            offentlig sektor, teknologi og mennesker. Vi vet hva
-                            det krever å stå i endring, usikkerhet og ansvar –
-                            fordi vi gjør det selv.
-                        </p>
-                        <p className="text-slate-700 mb-6">
-                            Med over 25 års erfaring fra offentlig sektor,
-                            e-helse, organisasjonsutvikling og teknologiledelse
-                            har vi stått på begge sider av bordet – som leder,
-                            innkjøper, rådgiver og tilbyder.
-                        </p>
-                        <p className="text-slate-700">
-                            <span className="text-natt">Valori</span> betyr
-                            verdier. For oss er de ikke til pynt – de er til
-                            bruk.
-                        </p>
-                    </div>
-                    <div className="bg-linear-to-br from-himmel to-white p-6 rounded-2xl">
-                        <h3 className="text-3xl text-natt font-light my-8 text-center pb-4">
-                            <strong className="font-medium">KRAFT</strong> står
-                            for:
-                        </h3>
+            <div className="mx-auto mt-10 max-w-[640px] md:mt-11">
+                <p className={paragraph}>
+                    Valori ble til med vilje – og med KRAFT. Ideen oppstod i
+                    Skarvheimen, da trygghet ble valgt bort til fordel for
+                    verdier, integritet og troen på å skape noe meningsfullt.
+                </p>
+                <p className={paragraph}>
+                    Vi bygger verdi i skjæringspunktet mellom helse, offentlig
+                    sektor, teknologi og mennesker. Vi vet hva det krever å stå
+                    i endring, usikkerhet og ansvar – fordi vi gjør det selv.
+                </p>
+                <p className={paragraph}>
+                    Med over 25 års erfaring fra offentlig sektor, e-helse,
+                    organisasjonsutvikling og teknologiledelse har vi stått på
+                    begge sider av bordet – som leder, innkjøper, rådgiver og
+                    tilbyder.
+                </p>
+                <p className="text-[17px] leading-[1.7] text-natt">
+                    Valori betyr verdier. For oss er de ikke til pynt – de er
+                    til bruk.
+                </p>
+            </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 place-items-center">
-                            {firstRow.map((value, index) => (
-                                <KraftBox key={index} {...value} />
-                            ))}
-
-                            <div className="md:col-span-3 flex flex-col md:flex-row md:justify-center gap-10">
-                                {secondRow.map((value, index) => (
-                                    <KraftBox key={index} {...value} />
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-                    <div className="text-center py-8">
-                        <h3 className="text-2xl text-natt mb-4">
-                            Valori betyr verdier.
-                        </h3>
-                        <p className="text-slate-700 mb-6">
-                            {/* Valori ble til med vilje – og med
-                            <span className="text-natt">KRAFT</span>. Ideen */}
-                            Men for oss er verdier ikke til pynt – de er til
-                            bruk. KRAFT er vår rettesnor, og viljen vår motor.
-                            Vi har over 25 års erfaring fra offentlig sektor,
-                            e‑helse, organisasjonsutvikling og teknologiledelse.
-                            Vi har sittet på begge sider av bordet – som
-                            innkjøper, tilbyder, leder og rådgiver.
-                        </p>
-                    </div>
+            <div className="mx-auto mt-16 max-w-[1120px] md:mt-[72px]">
+                <h3 className="mb-7 text-center text-[26px] font-normal tracking-[-0.01em] text-natt">
+                    <strong className="font-medium">KRAFT</strong> står for
+                </h3>
+                <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-5">
+                    {values.map((value) => (
+                        <KraftBox key={value.letter} {...value} />
+                    ))}
                 </div>
             </div>
         </section>
