@@ -93,16 +93,24 @@ export default function TimerApp(props: Props) {
         setFilters((f) => ({ ...f, [k]: v }));
 
     // ---- Mutasjoner -------------------------------------------------
+    /** Viser feilmelding i toast og logger detaljene til konsollen. */
+    function feil(msg: string, error: { message: string } | null) {
+        console.error(msg, error);
+        visToast(error?.message ? `${msg}: ${error.message}` : msg);
+    }
+
     async function leggTilEntry(
         input: Omit<TimeEntry, "id" | "created_at" | "user_id">
     ) {
+        // user_id er not null uten default i databasen, og RLS krever
+        // user_id = auth.uid() – den må derfor sendes med eksplisitt.
         const { data, error } = await supabase
             .from("time_entries")
-            .insert(input)
+            .insert({ ...input, user_id: props.userId })
             .select()
             .single();
         if (error || !data) {
-            visToast("Kunne ikke lagre føringen");
+            feil("Kunne ikke lagre føringen", error);
             return false;
         }
         setEntries((es) => [data, ...es]);
@@ -119,7 +127,7 @@ export default function TimerApp(props: Props) {
             .eq("id", id);
         if (error) {
             setEntries(forrige);
-            visToast("Kunne ikke slette føringen");
+            feil("Kunne ikke slette føringen", error);
             return;
         }
         visToast("Føring slettet");
@@ -134,7 +142,7 @@ export default function TimerApp(props: Props) {
             .select()
             .single();
         if (error || !data) {
-            visToast("Kunne ikke opprette prosjektet");
+            feil("Kunne ikke opprette prosjektet", error);
             return false;
         }
         setProjects((ps) => [...ps, data]);
@@ -148,7 +156,7 @@ export default function TimerApp(props: Props) {
             .update({ aktiv: !p.aktiv })
             .eq("id", p.id);
         if (error) {
-            visToast("Kunne ikke oppdatere prosjektet");
+            feil("Kunne ikke oppdatere prosjektet", error);
             return;
         }
         setProjects((ps) =>
@@ -371,7 +379,7 @@ export default function TimerApp(props: Props) {
             {toast && (
                 <div
                     role="status"
-                    className="fixed bottom-6 left-1/2 z-100 -translate-x-1/2 rounded-full bg-natt px-[22px] py-2.5 text-[13.5px] text-white shadow-[0_12px_30px_rgba(23,44,81,0.25)]"
+                    className="fixed bottom-6 left-1/2 z-100 max-w-[calc(100vw-32px)] -translate-x-1/2 rounded-full bg-natt px-[22px] py-2.5 text-center text-[13.5px] text-white shadow-[0_12px_30px_rgba(23,44,81,0.25)]"
                 >
                     {toast}
                 </div>
