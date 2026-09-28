@@ -53,7 +53,8 @@ export type Database = {
             };
             time_entries: {
                 Row: TimeEntry;
-                Insert: Insert<TimeEntry, "id" | "created_at" | "user_id">;
+                // user_id har ingen default i databasen og må alltid sendes med.
+                Insert: Insert<TimeEntry, "id" | "created_at">;
                 Update: Partial<TimeEntry>;
                 Relationships: [];
             };
